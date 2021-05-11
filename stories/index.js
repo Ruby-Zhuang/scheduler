@@ -1,3 +1,10 @@
+/**
+ * A story is a function that returns a React element. 
+ * - start writing stories by calling the storiesOf("Label", module) function with an argument to label the group
+ * - can configure the background for a group of stories by chaining the addParameters() function and using the background add-on to set the Storybook preview background colour
+ * - add a new story by chaining .add()
+ */
+
 import React from "react";
 
 import { storiesOf } from "@storybook/react";
