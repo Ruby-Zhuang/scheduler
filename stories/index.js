@@ -212,6 +212,7 @@ storiesOf("Appointment", module)
   .add("Appointment Empty", () => (
     <Fragment>
       <Appointment id={1} time="12pm" />
+      {/* The last appointment in a list should only show the time in the header.  */}
       <Appointment id="last" time="1pm" />
     </Fragment>
   ))
@@ -222,6 +223,7 @@ storiesOf("Appointment", module)
         time="12pm"
         interview={{ student: "Lydia Miller-Jones", interviewer }}
       />
+      {/* The last appointment in a list should only show the time in the header.  */}
       <Appointment id="last" time="1pm" />
     </Fragment>
   ));
