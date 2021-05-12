@@ -54,8 +54,18 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [ day, setDay ] = useState("Monday");   // Track the currently selected day
-  const [ days, setDays ] = useState([]);       // Days state to store an array of days used for the sidebar
+  // Combined state object
+  const [state, setState] = useState({
+    day: "Monday",  // Track the currently selected day
+    days: [],       // Days state to store an array of days used for the sidebar
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    // appointments: {}
+  });
+
+  // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState(prev => ({ ...prev, days })); // setState({ ...state, days }) gives warning b/c we are referring to state in the effect method, but we haven't declared it in the dependency list.
+
 
   /* 
    * useEffect for a GET request to /api/days using axios and update the days state with the response
@@ -65,8 +75,6 @@ export default function Application(props) {
   useEffect(() => {
     axios.get('/api/days')
       .then((response) => {
-        console.log([response.data]);
-        console.log([...response.data]);
         setDays([...response.data]);
       })
       .catch((error) => console.log("Error: ", error));
@@ -89,8 +97,8 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           < DayList
-            days={days}
-            day={day}
+            days={state.days}
+            day={state.day}
             setDay={setDay}
           />
         </nav>
