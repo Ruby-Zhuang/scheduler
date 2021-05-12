@@ -18,6 +18,12 @@ export default function Application(props) {
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
+  // Get a list of all appointments for selected day
+  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
+  const appointmentList = dailyAppointments.map((appointment) => {
+    return <Appointment key={appointment.id} {...appointment} />
+  })
+
   /* 
    * Empty array dependency because we only want this request to run once after the component renders for the first time.
    * To never rerun this effect, we have to pass it an empty dependency array.
@@ -44,13 +50,6 @@ export default function Application(props) {
     });
   }, [])
 
-  // Get a list of all appointments for selected day
-  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
-
-  // Apointment list
-  const appointmentList = dailyAppointments.map((appointment) => {
-    return <Appointment key={appointment.id} {...appointment} />
-  })
   
   return (
     <main className="layout">
