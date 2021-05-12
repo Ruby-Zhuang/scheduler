@@ -15,9 +15,6 @@ export default function Application(props) {
     appointments: {}  // {{}, {}, {}...}
   });
 
-  // Get a list of all appointments for selected day
-  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
-
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
@@ -46,6 +43,9 @@ export default function Application(props) {
       console.log("Error: ", error);
     });
   }, [])
+
+  // Get a list of all appointments for selected day
+  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
 
   // Apointment list
   const appointmentList = dailyAppointments.map((appointment) => {
