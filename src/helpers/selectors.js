@@ -1,4 +1,4 @@
-// Returns an array of appointments for that day
+// Returns an array of appointments for that day (empty array if nothing found)
 export function getAppointmentsForDay(state, day) {
   // Destructure state to: days [{}, {}, {}...] and appointments {{}, {}, {}...}
   const { days, appointments } = state; 
@@ -6,17 +6,17 @@ export function getAppointmentsForDay(state, day) {
   // Find the object in our state.days array who's name matches the provided day
   const specificDayOjbect = days.find((dayData) => dayData.name === day);
 
-  // Returns an empty array when the day is not found or when the days data is empty
-  if (!specificDayOjbect) {
+  // Returns an empty array when: the day is not found, the days data is empty, no appointments for the day
+  if (!specificDayOjbect || specificDayOjbect.appointments.length === 0) {
     return [];
   }
 
   // Appointment array of ids for the given day if the day exists
-  const appointmentsForDay = specificDayOjbect.appointments;
+  const appointmentIds = specificDayOjbect.appointments;
 
-  // Iterate over appointment array and for each id, return the corresponding appointment object from state.appointments
-  const result = appointmentsForDay.map((appointmentId) => appointments[appointmentId]);
+  // Iterate over appointmentIds array and for each id, return the corresponding appointment object from state.appointments
+  const dailyAppointments = appointmentIds.map((appointmentId) => appointments[appointmentId]);
 
-  // Return array of appointment objects, will be [] if there are no appointments for a specific day
-  return result;
+  // Return array of appointment objects
+  return dailyAppointments;
 }

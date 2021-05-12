@@ -3,19 +3,20 @@ import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay } from "helpers/selectors";
 
 import "components/Application.scss";
 
 export default function Application(props) {
   // Combined state object
   const [state, setState] = useState({
-    day: "Monday",  // Track the currently selected day
-    days: [],       // Days state to store an array of days used for the sidebar
-    appointments: {}
+    day: "Monday",    // Currently selected day
+    days: [],         // [{}, {}, {}...] Days state to store an array of days (used for the sidebar)
+    appointments: {}  // {{}, {}, {}...}
   });
 
-  // Holds a list of appointments for that day
-  const dailyAppointments = [];
+  // Get a list of all appointments for selected day
+  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
@@ -36,9 +37,10 @@ export default function Application(props) {
       axios.get('/api/appointments')
     ]).then((all) => {
       const [ daysResponse, appointmentsResponse ] = all;
-      const days = daysResponse.data;
-      const appointments = appointmentsResponse.data;
-      
+      const days = daysResponse.data;                 // Structure: [{}, {}, {}...]
+      const appointments = appointmentsResponse.data; // Structure: {{}, {}, {}...}
+
+      // Update state after all requests are complete
       setState(prev => ({ ...prev, days, appointments }));
     }).catch((error) => {
       console.log("Error: ", error);
@@ -49,7 +51,7 @@ export default function Application(props) {
   const appointmentList = dailyAppointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />
   })
-
+  
   return (
     <main className="layout">
       <section className="sidebar">
