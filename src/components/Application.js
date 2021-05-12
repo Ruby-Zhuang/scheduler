@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
@@ -6,24 +8,6 @@ import Appointment from "components/Appointment";
 import "components/Application.scss";
 
 // Mock Data
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
-
 const appointments = [
   {
     id: 1,
@@ -70,8 +54,22 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  // Track the currently selected day, has to be at the top level in the body of a function component
-  const [ day, setDay ] = useState("Monday");
+  const [ day, setDay ] = useState("Monday");   // Track the currently selected day
+  const [ days, setDays ] = useState([]);       // Days state to store an array of days used for the sidebar
+
+  /* 
+   * useEffect for a GET request to /api/days using axios and update the days state with the response
+   * Empty array dependency because we only want this request to run once after the component renders for the first time.
+   * To never rerun this effect, we have to pass it an empty dependency array.
+   */
+  useEffect(() => {
+    axios.get('/api/days')
+      .then((response) => {
+        // console.log(response.data);
+        setDays([...response.data]);
+      })
+      .catch((error) => console.log("Error: ", error));
+  }, [])
 
   // Apointment list
   const appointmentList = appointments.map((appointment) => {
