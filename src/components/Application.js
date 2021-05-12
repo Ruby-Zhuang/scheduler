@@ -7,60 +7,17 @@ import Appointment from "components/Appointment";
 
 import "components/Application.scss";
 
-// Mock Data
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  { 
-    id: 3,
-    time: "2pm",
-  },
-  { id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Cohen",
-      interviewer: {
-        id: 2, 
-        name: "Tori Malcolm", 
-        avatar: "https://i.imgur.com/Nmx0Qxo.png",
-      }
-    }
-  },
-  { id: 5,
-    time: "4pm",
-    interview: {
-      student: "Maria Boucher",
-      interviewer: {
-        id: 3, 
-        name: "Mildred Nazir", 
-        avatar: "https://i.imgur.com/T2WwVfS.png"
-      }
-    }
-  }
-];
-
 export default function Application(props) {
   // Combined state object
   const [state, setState] = useState({
     day: "Monday",  // Track the currently selected day
     days: [],       // Days state to store an array of days used for the sidebar
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    // appointments: {}
+    appointments: {}
   });
+
+  // Holds a list of appointments for that day
+  const dailyAppointments = [];
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
@@ -81,7 +38,7 @@ export default function Application(props) {
   }, [])
 
   // Apointment list
-  const appointmentList = appointments.map((appointment) => {
+  const appointmentList = dailyAppointments.map((appointment) => {
     return <Appointment key={appointment.id} {...appointment} />
   })
 
