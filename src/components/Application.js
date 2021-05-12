@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
 
 import DayList from "components/DayList";
@@ -12,7 +11,6 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",  // Track the currently selected day
     days: [],       // Days state to store an array of days used for the sidebar
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {}
   });
 
@@ -21,20 +19,30 @@ export default function Application(props) {
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days })); // setState({ ...state, days }) gives warning b/c we are referring to state in the effect method, but we haven't declared it in the dependency list.
-
 
   /* 
-   * useEffect for a GET request to /api/days using axios and update the days state with the response
    * Empty array dependency because we only want this request to run once after the component renders for the first time.
    * To never rerun this effect, we have to pass it an empty dependency array.
    */
   useEffect(() => {
-    axios.get('/api/days')
-      .then((response) => {
-        setDays([...response.data]);
-      })
-      .catch((error) => console.log("Error: ", error));
+    /*
+     * Make multiple requests at the same time before updating the state because of dependent data
+     * Promise.all runs many promises concurrently and when all the Promises resolve, update the state.
+     * Promise.all will resolve to an array of resolved values matching the order of the array passed in
+     * Data dependency: can't list appointments until getting the days data, followed by the appointments data
+     */
+    Promise.all([
+      axios.get('/api/days'),
+      axios.get('/api/appointments')
+    ]).then((all) => {
+      const [ daysResponse, appointmentsResponse ] = all;
+      const days = daysResponse.data;
+      const appointments = appointmentsResponse.data;
+      
+      setState(prev => ({ ...prev, days, appointments }));
+    }).catch((error) => {
+      console.log("Error: ", error);
+    });
   }, [])
 
   // Apointment list
