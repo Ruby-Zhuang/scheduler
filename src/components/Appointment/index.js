@@ -19,6 +19,16 @@ export default function Appointment(props){
     props.interview ? SHOW : EMPTY
   );
   
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer // id of interviewer
+    };
+
+    // Calls function at Application component with appointment id and interview as arguments
+    props.bookInterview(props.id, interview);
+  }
+
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -33,7 +43,7 @@ export default function Appointment(props){
       {mode === CREATE && (
         <Form
           interviewers={props.interviewers}
-          onSave={() => console.log("Clicked onSave")}
+          onSave={save}
           onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
         />
       )}

@@ -32,7 +32,7 @@ function useVisualMode(initial) {
     const prevMode = newHistory[newHistory.length - 1];
 
     setHistory(newHistory);
-    setMode(prevMode);
+    setMode(prevMode); // history[history.length - 1] doesn't work
   }
 
   return { mode, transition, back };

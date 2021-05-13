@@ -16,6 +16,10 @@ export default function Application(props) {
     interviewers: {}  // {{}, {}, {}...}
   });
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
@@ -35,6 +39,7 @@ export default function Application(props) {
         time={appointment.time}
         interviewers={dailyInterviewers} // Same interviewers for each daily appointment
         interview={interview}
+        bookInterview={bookInterview}
       />
     );
   });
