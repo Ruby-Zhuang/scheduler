@@ -1,4 +1,4 @@
-// Returns an array of appointments for that day (empty array if nothing found)
+// RETURNS AN ARRAY OF APPOINTMENTS FOR THAT DAY (EMPTY ARRAY IF NOTHING FOUND)
 export function getAppointmentsForDay(state, day) {
   const { days, appointments } = state; // days [{}, {}, {}...] and appointments {{}, {}, {}...}
 
@@ -15,13 +15,23 @@ export function getAppointmentsForDay(state, day) {
   return dailyAppointments;
 }
 
-// Returns a new object containing the interview data when we pass it an object that contains the interviewer. 
+// RETURNS A NEW OBJECT CONTAINING THE INTERVIEW DATA WHEN WE PASS IT AN OBJECT THAT CONTAINS THE INTERVIEWER. 
 export function getInterview(state, interview) {
+  const { interviewers } = state;
+
   // Return null if no interview booked
   if (!interview) return null;
 
+  console.log(interviewers);
+
   const interviewerId = interview.interviewer;
-  const interviewerData = state.interviewers[interviewerId];
+  const interviewerData = interviewers[interviewerId]; // Is this a shallow copy?
+
+  // interviewerData.name = "Changed";
+  // console.log("changing interviewData");
+  // console.log("checking copy:", interviewers);
+
   const interviewData = {...interview, interviewer: interviewerData}
+  
   return interviewData; // { student, interviewer:{} }
 }
