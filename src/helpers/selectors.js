@@ -16,3 +16,14 @@ export function getAppointmentsForDay(state, day) {
   // Return array of appointment objects
   return dailyAppointments;
 }
+
+// Returns a new object containing the interview data when we pass it an object that contains the interviewer. 
+export function getInterview(state, interview) {
+  // Return null if no interview booked
+  if (!interview) return null;
+
+  const interviewerId = interview.interviewer;
+  const interviewerData = state.interviewers[interviewerId];
+  const interviewData = {...interview, interviewer: interviewerData}
+  return interviewData; // { student, interviewer:{} }
+}

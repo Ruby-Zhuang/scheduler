@@ -3,7 +3,7 @@ import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "helpers/selectors";
 
 import "components/Application.scss";
 
@@ -12,7 +12,8 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",    // Currently selected day
     days: [],         // [{}, {}, {}...] Days state to store an array of days (used for the sidebar)
-    appointments: {}  // {{}, {}, {}...}
+    appointments: {}, // {{}, {}, {}...}
+    interviewers: {}  // {{}, {}, {}...}
   });
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
@@ -21,8 +22,17 @@ export default function Application(props) {
   // Get a list of all appointments for selected day
   const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
   const appointmentList = dailyAppointments.map((appointment) => {
-    return <Appointment key={appointment.id} {...appointment} />
-  })
+    const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={interview}
+      />
+    );
+  });
 
   /* 
    * Empty array dependency because we only want this request to run once after the component renders for the first time.
@@ -37,14 +47,15 @@ export default function Application(props) {
      */
     Promise.all([
       axios.get('/api/days'),
-      axios.get('/api/appointments')
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
     ]).then((all) => {
-      const [ daysResponse, appointmentsResponse ] = all;
+      const [ daysResponse, appointmentsResponse, interviewersData ] = all;
       const days = daysResponse.data;                 // Structure: [{}, {}, {}...]
       const appointments = appointmentsResponse.data; // Structure: {{}, {}, {}...}
+      const interviewers = interviewersData.data;     // Structure: {{}, {}, {}...}
 
-      // Update state after all requests are complete
-      setState(prev => ({ ...prev, days, appointments }));
+      setState(prev => ({ ...prev, days, appointments, interviewers })); // Update state after all requests are complete
     }).catch((error) => {
       console.log("Error: ", error);
     });
