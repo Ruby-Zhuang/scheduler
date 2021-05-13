@@ -13,7 +13,7 @@ function useVisualMode(initial) {
   function transition(newMode, replace = false) {
     if (replace) {
       const newHistory = history.slice(0, -1); // Shallow copies history array without last item
-      setHistory([...newHistory, newMode])
+      setHistory([...newHistory, newMode]) // Is there a way to do this using prev?
     } else {
       setHistory((prev) => [...prev, newMode]);
     }
