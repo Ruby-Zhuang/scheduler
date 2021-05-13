@@ -18,6 +18,20 @@ export default function Application(props) {
 
   function bookInterview(id, interview) {
     console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],  // 2. Copy appointment object
+      interview: { ...interview } // 1. Copy interview object
+    };
+
+    const appointments = {
+      ...state.appointments,      // 3. Copy apppointments ojbect
+      [id]: appointment
+    };
+
+    setState({
+      ...state,                   // 4. Copy state object
+      appointments
+    });
   }
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)

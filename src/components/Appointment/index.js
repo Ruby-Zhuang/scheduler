@@ -12,6 +12,7 @@ import Form from "components/Appointment/Form";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
 
 export default function Appointment(props){
   // use useVisualMode Hook and initialize mode to either SHOW or EMPTY if there's an interview
@@ -27,6 +28,7 @@ export default function Appointment(props){
 
     // Calls function at Application component with appointment id and interview as arguments
     props.bookInterview(props.id, interview);
+    transition(SHOW);
   }
 
   return (
