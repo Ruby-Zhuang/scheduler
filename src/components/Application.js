@@ -41,7 +41,7 @@ export default function Application(props) {
   useEffect(() => {
     /*
      * Make multiple requests at the same time before updating the state because of dependent data
-     * Promise.all runs many promises concurrently and when all the Promises resolve, update the state.
+     * Promise.all runs many promises concurrently and when all the Promises resolve, update the state
      * Promise.all will resolve to an array of resolved values matching the order of the array passed in
      * Data dependency: can't list appointments until getting the days data, followed by the appointments data
      */

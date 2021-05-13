@@ -1,7 +1,6 @@
 // Returns an array of appointments for that day (empty array if nothing found)
 export function getAppointmentsForDay(state, day) {
-  // Destructure state to: days [{}, {}, {}...] and appointments {{}, {}, {}...}
-  const { days, appointments } = state; 
+  const { days, appointments } = state; // days [{}, {}, {}...] and appointments {{}, {}, {}...}
 
   // Find the object in our state.days array who's name matches the provided day
   const dayObjectFound = days.find((dayData) => dayData.name === day);
@@ -13,7 +12,6 @@ export function getAppointmentsForDay(state, day) {
   const appointmentIds = dayObjectFound.appointments;
   const dailyAppointments = appointmentIds.map((appointmentId) => appointments[appointmentId]);
 
-  // Return array of appointment objects
   return dailyAppointments;
 }
 
