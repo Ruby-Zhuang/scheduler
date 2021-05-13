@@ -23,7 +23,6 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
-
     return (
       <Appointment
         key={appointment.id}
@@ -33,6 +32,8 @@ export default function Application(props) {
       />
     );
   });
+  
+  // console.log('Testing state:', state);
 
   /* 
    * Empty array dependency because we only want this request to run once after the component renders for the first time.

@@ -22,16 +22,14 @@ export function getInterview(state, interview) {
   // Return null if no interview booked
   if (!interview) return null;
 
-  console.log(interviewers);
-
   const interviewerId = interview.interviewer;
-  const interviewerData = interviewers[interviewerId]; // Is this a shallow copy?
-
-  // interviewerData.name = "Changed";
-  // console.log("changing interviewData");
-  // console.log("checking copy:", interviewers);
+  const interviewerData = interviewers[interviewerId]; // Is this a shallow copy? Does it matter?
 
   const interviewData = {...interview, interviewer: interviewerData}
+
+  // console.log("changing interviewData");
+  // interviewData.interviewer.name = "Changed";
+  // console.log("checking inside selectors:", state.interviewers);
   
   return interviewData; // { student, interviewer:{} }
 }
