@@ -3,7 +3,7 @@ import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 import "components/Application.scss";
 
@@ -19,8 +19,13 @@ export default function Application(props) {
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
+  // Get a list of all interviewers for selected day
+  const dailyInterviewers = getInterviewersForDay(state, state.day); 
+
   // Get a list of all appointments for selected day
-  const dailyAppointments = getAppointmentsForDay(state, state.day); // Returns empty array if nothing found
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  
+  // Iterate through the appointments list to generate Appointment component for each one
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
     return (
@@ -28,11 +33,12 @@ export default function Application(props) {
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
+        interviewers={dailyInterviewers} // Same interviewers for each daily appointment
         interview={interview}
       />
     );
   });
-  
+
   // console.log('Testing state:', state);
 
   /* 
