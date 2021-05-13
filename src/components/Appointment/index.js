@@ -22,6 +22,7 @@ export default function Appointment(props){
   return (
     <article className="appointment">
       <Header time={props.time} />
+      {/* When user clicks on the add appointment button in EMPTY mode, it should transition to the CREATE mode. */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
@@ -33,7 +34,7 @@ export default function Appointment(props){
         <Form
           interviewers={[]}
           onSave={() => console.log("Clicked onSave")}
-          onCancel={() => console.log("Clicked onCancel")}
+          onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
         />
       )}
     </article>
