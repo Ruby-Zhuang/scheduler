@@ -11,14 +11,16 @@ function useVisualMode(initial) {
    * If specified, hook will replace the current mode in the history with a new one 
    */
   function transition(newMode, replace = false) {
+    setMode(newMode);
+
     if (replace) {
-      const newHistory = history.slice(0, -1); // Shallow copies history array without last item
-      setHistory([...newHistory, newMode]) // Is there a way to do this using prev?
+      // const newHistory = history.slice(0, -1); // Shallow copies history array without last item
+      // setHistory([...newHistory, newMode]) // Is there a way to do this using prev?
+
+      setHistory((prev) => [...prev.slice(0, -1), newMode])
     } else {
       setHistory((prev) => [...prev, newMode]);
     }
-
-    setMode(newMode);
   }
 
   /*
@@ -28,11 +30,10 @@ function useVisualMode(initial) {
   function back() {
     if (history.length <= 1) return;  // Limit to not allow user to go back past the initial mode
 
-    const newHistory = history.slice(0, -1); // Shallow copies history array without last item
-    const prevMode = newHistory[newHistory.length - 1];
-
-    setHistory(newHistory);
-    setMode(prevMode); // history[history.length - 1] doesn't work
+    // const newHistory = history.slice(0, -1); // Shallow copies history array without last item
+    // const prevMode = newHistory[newHistory.length - 1]; // Last item of newHistory array
+    setHistory((prev) => [...prev.slice(0, -1)]);
+    setMode(history[history.length - 2]); // history[history.length - 1] doesn't work
   }
 
   return { mode, transition, back };
