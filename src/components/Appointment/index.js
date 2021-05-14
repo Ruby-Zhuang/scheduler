@@ -38,7 +38,7 @@ export default function Appointment(props){
   }
 
   // Deleting an interview -> slot becomes empty
-  function deleteInterview() {
+  function destroy() {
     transition(DELETING);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY));
@@ -79,7 +79,7 @@ export default function Appointment(props){
         <Confirm
           message="Are you sure you want to delete?"
           onCancel={() => back()}
-          onConfirm={deleteInterview}
+          onConfirm={destroy}
         />
       }
     </article>
