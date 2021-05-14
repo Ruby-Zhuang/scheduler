@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";

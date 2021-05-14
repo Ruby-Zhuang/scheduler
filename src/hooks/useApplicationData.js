@@ -18,6 +18,26 @@ const useApplicationData = function() {
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
+
+  function getSpotsRemaining(state, updatedAppointments, day) {
+    const { days } = state; // days [{}, {}, {}...]
+
+    // Find the object in our state.days array who's name matches the provided day
+    const dayObjectFound = days.find((dayData) => dayData.name === day);  
+  
+    // Count the number of empty spots by iterating over the array of appointment IDs
+    const appointmentIds = dayObjectFound.appointments;
+    const spotsRemaining = appointmentIds.reduce((emptySpots, appointmentId) => {
+      if (updatedAppointments[appointmentId].interview === null) emptySpots++;
+      return emptySpots;
+    }, 0);
+
+    console.log(day, spotsRemaining);
+
+  }
+
+
+
   // Function adds an appointment/interview by making an HTTP request and updating the local state.
   function bookInterview(id, interview) {
     // console.log(id, interview);
@@ -31,6 +51,8 @@ const useApplicationData = function() {
       ...state.appointments,      // 3. Copy apppointments ojbect & replace specific copied appointment object
       [id]: appointment
     };
+    
+    getSpotsRemaining(state, appointments, state.day);
 
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => setState({...state, appointments}));
