@@ -8,12 +8,14 @@ import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
 import Status from "components/Appointment/Status";
+import Confirm from "components/Appointment/Confirm";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
+const CONFIRM = "CONFIRM";
 
 
 export default function Appointment(props){
@@ -22,6 +24,7 @@ export default function Appointment(props){
     props.interview ? SHOW : EMPTY
   );
   
+  // Saving an interview -> show appointment once saved
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -34,10 +37,16 @@ export default function Appointment(props){
       .then(() => transition(SHOW));
   }
 
+  // Deleting an interview -> slot becomes empty
   function deleteInterview() {
     transition(DELETING);
     props.cancelInterview(props.id)
       .then(() => transition(EMPTY));
+  }
+
+  // Confirmation Dialog before defore deleting since canceling an interview is considered a "destructive action".
+  function showConfirmation() {
+    transition(CONFIRM);
   }
 
   return (
@@ -49,7 +58,7 @@ export default function Appointment(props){
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete={deleteInterview}
+          onDelete={showConfirmation}
         />
       )}
       {mode === CREATE && (
@@ -61,7 +70,13 @@ export default function Appointment(props){
       )}
       {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && <Status message="Deleting" />}
-
+      {mode === CONFIRM &&     
+        <Confirm
+          message="Are you sure you want to delete?"
+          onCancel={() => back()}
+          onConfirm={deleteInterview}
+        />
+      }
     </article>
   );
 }
