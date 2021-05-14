@@ -2,7 +2,6 @@ import { useState } from "react";
 
 // Custom Hook that allows us to manage the visual mode of any component
 function useVisualMode(initial) {
-  const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]); // Keep track of the history of the modes
 
   /*
@@ -11,12 +10,7 @@ function useVisualMode(initial) {
    * If specified, hook will replace the current mode in the history with a new one 
    */
   function transition(newMode, replace = false) {
-    setMode(newMode);
-
     if (replace) {
-      // const newHistory = history.slice(0, -1); // Shallow copies history array without last item
-      // setHistory([...newHistory, newMode]) // Is there a way to do this using prev?
-
       setHistory((prev) => [...prev.slice(0, -1), newMode])
     } else {
       setHistory((prev) => [...prev, newMode]);
@@ -29,14 +23,11 @@ function useVisualMode(initial) {
    */
   function back() {
     if (history.length <= 1) return;  // Limit to not allow user to go back past the initial mode
-
-    // const newHistory = history.slice(0, -1); // Shallow copies history array without last item
-    // const prevMode = newHistory[newHistory.length - 1]; // Last item of newHistory array
     setHistory((prev) => [...prev.slice(0, -1)]);
-    setMode(history[history.length - 2]); // history[history.length - 1] doesn't work
   }
 
-  return { mode, transition, back };
+  // Mode will always be the last history item. Because of React & hooks, state will be updated when returned
+  return { mode: history[history.length - 1], transition, back };
 }
 
 export default useVisualMode;
