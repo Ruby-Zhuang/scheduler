@@ -1,5 +1,4 @@
 import React from "react";
-// import axios from "axios";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
@@ -11,51 +10,6 @@ import "components/Application.scss";
 
 export default function Application(props) {
   const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
-  // Combined state object
-  // const [state, setState] = useState({
-  //   day: "Monday",    // Currently selected day
-  //   days: [],         // [{}, {}, {}...] Days state to store an array of days (used for the sidebar)
-  //   appointments: {}, // {{}, {}, {}...}
-  //   interviewers: {}  // {{}, {}, {}...}
-  // });
-
-  // // Function to add appointments/interviews
-  // function bookInterview(id, interview) {
-  //   // console.log(id, interview);
-    
-  //   // Immutable update pattern to update interview -> appointment -> appointments -> state
-  //   const appointment = {
-  //     ...state.appointments[id],  // 2. Copy appointment object & replace with copied interview object
-  //     interview: { ...interview } // 1. Copy interview object
-  //   };
-  //   const appointments = {
-  //     ...state.appointments,      // 3. Copy apppointments ojbect & replace specific copied appointment object
-  //     [id]: appointment
-  //   };
-
-  //   return axios.put(`/api/appointments/${id}`, {interview})
-  //     .then(() => setState({...state, appointments}));
-  // }
-  
-  // // Function to delete appointments/interviews
-  // function cancelInterview(id) {
-  //   // console.log(id);
-
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: null
-  //   };
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-
-  //   return axios.delete(`/api/appointments/${id}`)
-  //     .then(() => setState({...state, appointments}));
-  // }
-
-  // // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
-  // const setDay = day => setState({ ...state, day });
 
   // Get a list of all interviewers for selected day
   const dailyInterviewers = getInterviewersForDay(state, state.day); 
@@ -79,36 +33,6 @@ export default function Application(props) {
     );
   });
 
-  // // console.log('Testing state:', state);
-
-  // /* 
-  //  * Empty array dependency because we only want this request to run once after the component renders for the first time.
-  //  * To never rerun this effect, we have to pass it an empty dependency array.
-  //  */
-  // useEffect(() => {
-  //   /*
-  //    * Make multiple requests at the same time before updating the state because of dependent data
-  //    * Promise.all runs many promises concurrently and when all the Promises resolve, update the state
-  //    * Promise.all will resolve to an array of resolved values matching the order of the array passed in
-  //    * Data dependency: can't list appointments until getting the days data, followed by the appointments data
-  //    */
-  //   Promise.all([
-  //     axios.get('/api/days'),
-  //     axios.get('/api/appointments'),
-  //     axios.get('/api/interviewers')
-  //   ]).then((all) => {
-  //     const [ daysResponse, appointmentsResponse, interviewersData ] = all;
-  //     const days = daysResponse.data;                 // Structure: [{}, {}, {}...]
-  //     const appointments = appointmentsResponse.data; // Structure: {{}, {}, {}...}
-  //     const interviewers = interviewersData.data;     // Structure: {{}, {}, {}...}
-
-  //     setState(prev => ({ ...prev, days, appointments, interviewers })); // Update state after all requests are complete
-  //   }).catch((error) => {
-  //     console.log("Error: ", error);
-  //   });
-  // }, [])
-
-  
   return (
     <main className="layout">
       <section className="sidebar">
