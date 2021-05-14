@@ -16,7 +16,7 @@ const CREATE = "CREATE";
 const SAVING = "SAVING";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
-
+const EDIT = "EDIT";
 
 export default function Appointment(props){
   // use useVisualMode Hook and initialize mode to either SHOW or EMPTY if there's an interview
@@ -44,11 +44,6 @@ export default function Appointment(props){
       .then(() => transition(EMPTY));
   }
 
-  // Confirmation Dialog before defore deleting since canceling an interview is considered a "destructive action".
-  function showConfirmation() {
-    transition(CONFIRM);
-  }
-
   return (
     <article className="appointment">
       <Header time={props.time} />
@@ -57,13 +52,23 @@ export default function Appointment(props){
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer}
-          onDelete={showConfirmation}
+          interviewer={props.interview.interviewer} // Accepts interviewer object
+          onEdit={() => transition(EDIT)}
+          onDelete={() => transition(CONFIRM)}
         />
       )}
       {mode === CREATE && (
         <Form
           interviewers={props.interviewers}
+          onSave={save}
+          onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
+        />
+      )}
+      {mode === EDIT && (
+        <Form
+          name={props.interview.student}
+          interviewers={props.interviewers}
+          interviewer={props.interview.interviewer.id} // Accepts interviewer id
           onSave={save}
           onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
         />
