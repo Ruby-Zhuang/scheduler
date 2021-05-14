@@ -18,20 +18,20 @@ export default function Application(props) {
 
   function bookInterview(id, interview) {
     console.log(id, interview);
+    
+    // Immutable update pattern to update interview -> appointment -> appointments -> state
     const appointment = {
-      ...state.appointments[id],  // 2. Copy appointment object
+      ...state.appointments[id],  // 2. Copy appointment object & replace with copied interview object
       interview: { ...interview } // 1. Copy interview object
     };
-
     const appointments = {
-      ...state.appointments,      // 3. Copy apppointments ojbect
+      ...state.appointments,      // 3. Copy apppointments ojbect & replace specific copied appointment object
       [id]: appointment
     };
 
-    setState({
-      ...state,                   // 4. Copy state object
-      appointments
-    });
+    return axios.put(`/api/appointments/${id}`, {interview})
+      .then(() => setState({...state, appointments}));
+
   }
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)

@@ -7,7 +7,7 @@ import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Form from "components/Appointment/Form";
-
+import Status from "components/Appointment/Status";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -26,9 +26,10 @@ export default function Appointment(props){
       interviewer // id of interviewer
     };
 
+    transition(SAVING);
     // Calls function at Application component with appointment id and interview as arguments
-    props.bookInterview(props.id, interview);
-    transition(SHOW);
+    props.bookInterview(props.id, interview)
+      .then(() => transition(SHOW));
   }
 
   return (
@@ -49,6 +50,7 @@ export default function Appointment(props){
           onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
         />
       )}
+      {mode === SAVING && <Status message="Saving" />}
     </article>
   );
 }
