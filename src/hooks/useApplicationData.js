@@ -42,17 +42,9 @@ const useApplicationData = function() {
 
   // Function adds an appointment/interview by making an HTTP request and updating the local state.
   function bookInterview(id, interview) {
-    // console.log(id, interview);
-    
-    // Immutable update pattern to update interview -> appointment -> appointments -> state
-    const appointment = {
-      ...state.appointments[id],  // 2. Copy appointment object & replace with copied interview object
-      interview: { ...interview } // 1. Copy interview object
-    };
-    const appointments = {
-      ...state.appointments,      // 3. Copy apppointments ojbect & replace specific copied appointment object
-      [id]: appointment
-    };
+    // Immutable update pattern to update interview -> appointment -> appointments
+    const appointment = { ...state.appointments[id], interview: { ...interview }};
+    const appointments = { ...state.appointments, [id]: appointment };
     
     // Update days with the new day and updated spots remaining 
     const days = updateDays(state.days, appointments, id);
@@ -63,16 +55,9 @@ const useApplicationData = function() {
   
   // Function to delete an appointment/interview by making an HTTP request and updating the local state.
   function cancelInterview(id) {
-    // console.log(id);
-
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
+    // Immutable update pattern to update interview -> appointment -> appointments
+    const appointment = { ...state.appointments[id], interview: null };
+    const appointments = { ...state.appointments, [id]: appointment };
 
     // Update days with the new day and updated spots remaining 
     const days = updateDays(state.days, appointments, id);
