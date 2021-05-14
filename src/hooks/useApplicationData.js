@@ -19,24 +19,26 @@ const useApplicationData = function() {
   const setDay = day => setState({ ...state, day });
 
 
-  function getSpotsRemaining(state, updatedAppointments, day) {
-    const { days } = state; // days [{}, {}, {}...]
-
-    // Find the object in our state.days array who's name matches the provided day
-    const dayObjectFound = days.find((dayData) => dayData.name === day);  
+  function updateDays(days, updatedAppointments, updatedAppointmentId) {
+    // Find the object and its index in the days array that has the appointmentId of the updated appointment
+    const dayObjectFound = days.find((dayData) => dayData.appointments.includes(updatedAppointmentId));  
+    const dayIndexFound = days.findIndex((dayData) => dayData.name === dayObjectFound.name);  
   
-    // Count the number of empty spots by iterating over the array of appointment IDs
+    // Count the number of empty spots by iterating over the array of appointment IDs for the day
     const appointmentIds = dayObjectFound.appointments;
     const spotsRemaining = appointmentIds.reduce((emptySpots, appointmentId) => {
       if (updatedAppointments[appointmentId].interview === null) emptySpots++;
       return emptySpots;
     }, 0);
 
-    console.log(day, spotsRemaining);
-
+    // Immutable update pattern to update spots -> day -> days
+    const newDay = {...dayObjectFound, spots: spotsRemaining};
+    const newDays = [...days];
+    newDays[dayIndexFound] = newDay;
+    
+    // console.log(newDays);
+    return newDays;
   }
-
-
 
   // Function adds an appointment/interview by making an HTTP request and updating the local state.
   function bookInterview(id, interview) {
@@ -52,10 +54,11 @@ const useApplicationData = function() {
       [id]: appointment
     };
     
-    getSpotsRemaining(state, appointments, state.day);
+    // Update days with the new day and updated spots remaining 
+    const days = updateDays(state.days, appointments, id);
 
     return axios.put(`/api/appointments/${id}`, {interview})
-      .then(() => setState({...state, appointments}));
+      .then(() => setState({...state, appointments, days}));
   }
   
   // Function to delete an appointment/interview by making an HTTP request and updating the local state.
@@ -71,8 +74,11 @@ const useApplicationData = function() {
       [id]: appointment
     };
 
+    // Update days with the new day and updated spots remaining 
+    const days = updateDays(state.days, appointments, id);
+
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => setState({...state, appointments}));
+      .then(() => setState({...state, appointments, days}));
   }
 
   /* 
