@@ -18,25 +18,24 @@ const useApplicationData = function() {
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
   const setDay = day => setState({ ...state, day });
 
-
+  // Function to update the number of spots remaining for a given day and returns a days array with the updated day
   function updateDays(days, updatedAppointments, updatedAppointmentId) {
-    // Find the object and its index in the days array that has the appointmentId of the updated appointment
-    const dayObjectFound = days.find((dayData) => dayData.appointments.includes(updatedAppointmentId));  
-    const dayIndexFound = days.findIndex((dayData) => dayData.name === dayObjectFound.name);  
-  
-    // Count the number of empty spots by iterating over the array of appointment IDs for the day
-    const appointmentIds = dayObjectFound.appointments;
-    const spotsRemaining = appointmentIds.reduce((emptySpots, appointmentId) => {
-      if (updatedAppointments[appointmentId].interview === null) emptySpots++;
-      return emptySpots;
-    }, 0);
+    // Function that finds the number of spots remaining for a given day
+    const getSpotsRemaining = (day) => {
+      const spotsRemaining = day.appointments.reduce((emptySpots, appointmentId) => {
+        if (updatedAppointments[appointmentId].interview === null) emptySpots++;
+        return emptySpots;
+      }, 0);
 
-    // Immutable update pattern to update spots -> day -> days
-    const newDay = {...dayObjectFound, spots: spotsRemaining};
-    const newDays = [...days];
-    newDays[dayIndexFound] = newDay;
-    
-    // console.log(newDays);
+      return spotsRemaining;
+    }
+
+    // Iterate over days array and creates a copy of each day
+    const newDays = days.map((day) => {
+      // Updates the spots remaining for the day that has the updated interview
+      return day.appointments.includes(updatedAppointmentId) ? {...day, spots: getSpotsRemaining(day)} : day
+    })
+
     return newDays;
   }
 
@@ -49,6 +48,7 @@ const useApplicationData = function() {
     // Update days with the new day and updated spots remaining 
     const days = updateDays(state.days, appointments, id);
 
+    // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => setState({...state, appointments, days}));
   }
@@ -62,6 +62,7 @@ const useApplicationData = function() {
     // Update days with the new day and updated spots remaining 
     const days = updateDays(state.days, appointments, id);
 
+    // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios.delete(`/api/appointments/${id}`)
       .then(() => setState({...state, appointments, days}));
   }
