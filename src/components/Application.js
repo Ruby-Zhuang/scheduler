@@ -16,8 +16,9 @@ export default function Application(props) {
     interviewers: {}  // {{}, {}, {}...}
   });
 
+  // Function to add appointments/interviews
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    // console.log(id, interview);
     
     // Immutable update pattern to update interview -> appointment -> appointments -> state
     const appointment = {
@@ -31,7 +32,23 @@ export default function Application(props) {
 
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(() => setState({...state, appointments}));
+  }
+  
+  // Function to delete appointments/interviews
+  function cancelInterview(id) {
+    // console.log(id);
 
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => setState({...state, appointments}));
   }
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
@@ -54,6 +71,7 @@ export default function Application(props) {
         interviewers={dailyInterviewers} // Same interviewers for each daily appointment
         interview={interview}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
