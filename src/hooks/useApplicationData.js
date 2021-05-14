@@ -30,9 +30,10 @@ const useApplicationData = function() {
       return spotsRemaining;
     }
 
-    // Iterate over days array and creates a copy of each day
+    // Iterate over days array and create a copy of each day & update the spots remaining for the day updated
     const newDays = days.map((day) => {
       // Updates the spots remaining for the day that has the updated interview
+      // If the appointments array for a given day contains the appointmentId, update it's spots value, otherwise, create a copy of the day
       return day.appointments.includes(updatedAppointmentId) ? {...day, spots: getSpotsRemaining(day)} : day
     })
 
