@@ -1,22 +1,27 @@
-import React from "react";
+import React from 'react';
 
-import DayList from "components/DayList";
-import Appointment from "components/Appointment";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
+import DayList from 'components/DayList';
+import Appointment from 'components/Appointment';
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from 'helpers/selectors';
 
-import useApplicationData from "hooks/useApplicationData";
+import useApplicationData from 'hooks/useApplicationData';
 
-import "components/Application.scss";
+import 'components/Application.scss';
 
 export default function Application(props) {
-  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
+  const { state, setDay, bookInterview, cancelInterview } =
+    useApplicationData();
 
   // Get a list of all interviewers for selected day
-  const dailyInterviewers = getInterviewersForDay(state, state.day); 
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   // Get a list of all appointments for selected day
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  
+
   // Iterate through the appointments list to generate Appointment component for each one
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
@@ -44,11 +49,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          < DayList
-            days={state.days}
-            day={state.day}
-            setDay={setDay}
-          />
+          <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
