@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import Button from "components/Button";
-import InterviewerList from "components/InterviewerList";
+import React, { useState } from 'react';
+import Button from 'components/Button';
+import InterviewerList from 'components/InterviewerList';
 
-/* 
+/*
  * Form component keeps track of the current text input value and the currently selected interviewer
  * Allows user to input their information, save it and edit it
  */
 export default function Form(props) {
   // Add state and set default values
-  const [ name, setName ] = useState(props.name || "");
-  const [ interviewer, setInterviewer ] = useState(props.interviewer || null);
-  
+  const [name, setName] = useState(props.name || '');
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
   // Deconstruct remaining props
-  const {interviewers, onSave, onCancel } = props;
+  const { interviewers, onSave, onCancel } = props;
 
   // Clear and reset the form values
   const reset = () => {
@@ -30,7 +30,7 @@ export default function Form(props) {
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
@@ -43,16 +43,20 @@ export default function Form(props) {
             */
           />
         </form>
-        <InterviewerList 
-          interviewers={interviewers} 
+        <InterviewerList
+          interviewers={interviewers}
           value={interviewer} // Current id of interviewer
           onChange={setInterviewer} // Function to update selected interviewer
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={() => onSave(name, interviewer)}>Save</Button>
+          <Button danger onClick={cancel}>
+            Cancel
+          </Button>
+          <Button confirm onClick={() => onSave(name, interviewer)}>
+            Save
+          </Button>
         </section>
       </section>
     </main>
