@@ -31,7 +31,7 @@ describe('Application', () => {
   it('loads data, books an interview and reduces the spots remaining for Monday by 1', async () => {
     // 1. Render the Application
     /* Container represents the DOM tree that we are working with, and we can pass it to any of the imported queries. */
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
 
     // 2. Wait until the text "Archie Cohen" is displayed
     await waitForElement(() => getByText(container, 'Archie Cohen'));
@@ -54,7 +54,8 @@ describe('Application', () => {
     // 6. Click the "Save" button on that same appointment
     fireEvent.click(getByText(appointment, 'Save'));
 
-    console.log(prettyDOM(appointment));
+    debug();
+    // console.log(prettyDOM(appointment));
 
     // 7. Check that the element with the text "Saving" is displayed
     // 8. Wait until the element with the text "Lydia Miller-Jones" is displayed
