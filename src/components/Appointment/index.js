@@ -52,7 +52,7 @@ export default function Appointment(props) {
   }
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {/* When user clicks on the add appointment button in EMPTY mode, it should transition to the CREATE mode. */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
