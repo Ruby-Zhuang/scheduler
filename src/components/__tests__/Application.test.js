@@ -55,9 +55,6 @@ describe('Application', () => {
     // 6. Click the "Save" button on that same appointment
     fireEvent.click(getByText(appointment, 'Save'));
 
-    // debug();
-    // console.log(prettyDOM(appointment));
-
     // 7. Check that the element with the text "Saving" is displayed
     expect(getByText(appointment, 'Saving')).toBeInTheDocument();
 
@@ -68,8 +65,6 @@ describe('Application', () => {
     const day = getAllByTestId(container, 'day').find((day) =>
       queryByText(day, 'Monday')
     );
-
-    console.log(prettyDOM(day));
 
     // 9. Check that the DayListItem with the text "Monday" also has the text "no spots remaining"
     expect(getByText(day, 'no spots remaining')).toBeInTheDocument();
