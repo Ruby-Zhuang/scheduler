@@ -16,7 +16,7 @@ const useApplicationData = function () {
   });
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
-  // const setDay = (day) => setState({ ...state, day });
+  const setDay = (day) => setState({ ...state, day });
 
   /**
    * Update days array of objects with the number of spots remaining for a given day
