@@ -30,7 +30,7 @@ export default function InterviewerList(props) {
   );
 }
 
-// Define the validation configuration interviewers props: to be an Array
+// Define the validation configuration for interviewers props: to be an Array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired,
 };

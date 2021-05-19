@@ -17,6 +17,6 @@ export default function DayList(props) {
     );
   });
 
-  // DayList component should return a single <ul></ul> element with three <DayListItem /> components as children
+  // DayList component should return a single <ul></ul> element with <DayListItem /> components as children
   return <ul>{daysList}</ul>;
 }
