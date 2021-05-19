@@ -4,7 +4,6 @@
  * - can configure the background for a group of stories by chaining the addParameters() function and using the background add-on to set the Storybook preview background colour
  * - add a new story by chaining .add()
  */
-
 import React, { Fragment } from 'react';
 
 import { storiesOf } from '@storybook/react';

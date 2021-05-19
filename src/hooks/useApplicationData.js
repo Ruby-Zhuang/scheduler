@@ -25,7 +25,6 @@ const useApplicationData = function () {
    * @param {Number} updatedAppointmentId The updated appointment id.
    * @return {[{}]} An updated array of day objects.
    */
-  // Function to update the number of spots remaining for a given day and returns a days array with the updated day
   function updateDays(days, updatedAppointments, updatedAppointmentId) {
     // Function that finds the number of spots remaining for a given day
     const getSpotsRemaining = (day) => {
@@ -109,9 +108,9 @@ const useApplicationData = function () {
     ])
       .then((all) => {
         const [daysResponse, appointmentsResponse, interviewersData] = all;
-        const days = daysResponse.data; // Structure: [{}, {}, {}...]
-        const appointments = appointmentsResponse.data; // Structure: {{}, {}, {}...}
-        const interviewers = interviewersData.data; // Structure: {{}, {}, {}...}
+        const days = daysResponse.data;
+        const appointments = appointmentsResponse.data;
+        const interviewers = interviewersData.data;
 
         setState((prev) => ({ ...prev, days, appointments, interviewers })); // Update state after all requests are complete
       })
