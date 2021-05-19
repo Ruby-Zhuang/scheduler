@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // Show component allows a user to see an existing appointment
 export default function Show(props) {

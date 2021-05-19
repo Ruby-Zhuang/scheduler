@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // Error component informs the user when an error occurs
 export default function Error(props) {

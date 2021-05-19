@@ -20,7 +20,7 @@ export default function Form(props) {
 
   // Handle cancel
   const cancel = () => {
-    reset(); // Why reset form (when appointment transitions to EMPTY OR SHOW anyways)? Also why don't we reset error?
+    reset();
     props.onCancel();
   };
 

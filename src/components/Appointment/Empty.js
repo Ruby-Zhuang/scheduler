@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // Empty component allows a user to choose which time slot to book
 export default function Empty(props) {

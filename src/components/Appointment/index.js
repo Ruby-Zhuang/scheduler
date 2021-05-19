@@ -35,7 +35,8 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    // Calls function at Application component with appointment id and interview as arguments
+
+    // Calls function at Application component level with appointment id and interview as arguments
     props
       .bookInterview(props.id, interview)
       .then(() => transition(SHOW))
@@ -45,6 +46,7 @@ export default function Appointment(props) {
   // Deleting an interview -> slot becomes empty
   function destroy() {
     transition(DELETING, true); // Replace previous CONFIRM mode
+
     props
       .cancelInterview(props.id)
       .then(() => transition(EMPTY))
@@ -68,7 +70,7 @@ export default function Appointment(props) {
         <Form
           interviewers={props.interviewers}
           onSave={save}
-          onCancel={() => back()} // Return to the EMPTY state when we click the cancel button.
+          onCancel={() => back()} // Return to the EMPTY state when we click the cancel button in CREATE mode.
         />
       )}
       {mode === EDIT && (
@@ -77,7 +79,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           interviewer={props.interview.interviewer.id} // Accepts interviewer id
           onSave={save}
-          onCancel={() => back()} // Return to the SHOW state when we click the cancel button.
+          onCancel={() => back()} // Return to the SHOW state when we click the cancel button in EDIT mode.
         />
       )}
       {mode === SAVING && <Status message="Saving" />}
