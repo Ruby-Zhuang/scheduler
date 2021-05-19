@@ -25,6 +25,7 @@ export default function Application(props) {
   // Iterate through the appointments list to generate Appointment component for each one
   const appointmentList = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+
     return (
       <Appointment
         key={appointment.id}
@@ -41,7 +42,7 @@ export default function Application(props) {
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* Sidebar elements during the "Project Setup & Familiarity" activity. */}
+        {/* Sidebar elements */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
