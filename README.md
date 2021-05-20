@@ -2,7 +2,19 @@
 
 Interview Scheduler is a modern single page React client application that allows a user to book, manage and cancel interviews with a mentor.
 
-Check out the 👉 [deployed website!](https://scheduler-rubyzhuang.netlify.app/) 👈
+Check out the 👉 [deployed website here!](https://scheduler-rubyzhuang.netlify.app/) 👈
+
+## API Server
+
+The application is connected to the scheduler API server which persists data to a database.
+
+Check out the 👉 [deployed API server here!](https://scheduler-lhl-rubyzhuang.herokuapp.com/api/days) 👈
+
+Note: the server supports three GET endpoints. The `/` path will return a 404 error.
+
+- `GET /api/days/`
+- `GET /api/appointments/`
+- `GET /api/interviewers/`
 
 ## Final Product
 
@@ -32,11 +44,6 @@ Interview Validation & Error Handling when Server Requests Fail
 
 - **Front-End**: React, Axios, Babel, SCSS
 - **Testing**: Webpack Dev Server, Storybook, Jest, Cypress
-
-## API Server
-
-- Connected to the scheduler API server which persists data to a database
-- Available at: https://github.com/Ruby-Zhuang/scheduler-api
 
 ## Setup
 
