@@ -9,7 +9,7 @@ Check out the 👉 [deployed website here!](https://scheduler-rubyzhuang.netlify
 **Creating an Interview**
 !["GIF Creating an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Booking-interview.gif?raw=true)
 
-**Editing an Interview**!
+**Editing an Interview**
 !["GIF of Editing an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Editing-interview.gif?raw=true)
 
 **Canceling an Interview**
