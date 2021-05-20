@@ -10,10 +10,10 @@ Creating an Interview
 !["GIF Creating an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Booking-interview.gif?raw=true)
 
 Editing an Interview
-!["GIF of Editing an Interview"]()
+!["GIF of Editing an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Editing-interview.gif?raw=true)
 
 Canceling an Interview
-!["GIF of Canceling an Interview"]()
+!["GIF of Canceling an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Deleting-interview.gif?raw=true)
 
 Error Messages for Saving and Deleting
 !["GIF of Error Messages for Saving and Deleting"]()
