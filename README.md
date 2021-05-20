@@ -4,30 +4,18 @@ Interview Scheduler is a modern single page React client application that allows
 
 Check out the 👉 [deployed website here!](https://scheduler-rubyzhuang.netlify.app/) 👈
 
-## API Server
-
-The application is connected to the scheduler API server which persists data to a database.
-
-Check out the 👉 [deployed API server here!](https://scheduler-lhl-rubyzhuang.herokuapp.com/api/days) 👈
-
-Note: the server supports three GET endpoints. The `/` path will return a 404 error.
-
-- `GET /api/days/`
-- `GET /api/appointments/`
-- `GET /api/interviewers/`
-
 ## Final Product
 
-Creating an Interview
+**Creating an Interview**
 !["GIF Creating an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Booking-interview.gif?raw=true)
 
-Editing an Interview
+**Editing an Interview**!
 !["GIF of Editing an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Editing-interview.gif?raw=true)
 
-Canceling an Interview
+**Canceling an Interview**
 !["GIF of Canceling an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Deleting-interview.gif?raw=true)
 
-Interview Validation & Error Handling when Server Requests Fail
+**Interview Validation & Error Handling when Server Requests Fail**
 !["GIF of Errors"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Errors.gif?raw=true)
 
 ## Features
@@ -66,3 +54,15 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## API Server
+
+The application is connected to the scheduler API server which persists data to a database.
+
+Check out the 👉 [deployed API server here!](https://scheduler-lhl-rubyzhuang.herokuapp.com/api/days) 👈
+
+Note: the server supports three GET endpoints. The `/` path will return a 404 error.
+
+- `GET /api/days/`
+- `GET /api/appointments/`
+- `GET /api/interviewers/`
