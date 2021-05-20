@@ -7,7 +7,7 @@ Check out the 👉 [deployed website!](https://scheduler-rubyzhuang.netlify.app/
 ## Final Product
 
 Creating an Interview
-!["GIF Creating an Interview"]()
+!["GIF Creating an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Booking-interview.gif?raw=true)
 
 Editing an Interview
 !["GIF of Editing an Interview"]()
