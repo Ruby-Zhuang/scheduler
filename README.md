@@ -28,16 +28,15 @@ Error Messages for Saving and Deleting
 - A user is shown a status indicator while asynchronous operations are in progress.
 - The application makes API requests to load and persist data.
 
-## API Server
-
-- Connected to the scheduler API server which persists data to a database
-- 👉 Deployed Server
-- Available at: https://github.com/Ruby-Zhuang/scheduler-api
-
 ## Tech Stack
 
 - **Front-End**: React, Axios, Babel, SCSS
 - **Testing**: Webpack Dev Server, Storybook, Jest, Cypress
+
+## API Server
+
+- Connected to the scheduler API server which persists data to a database
+- Available at: https://github.com/Ruby-Zhuang/scheduler-api
 
 ## Setup
 

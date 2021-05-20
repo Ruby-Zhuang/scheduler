@@ -50,9 +50,8 @@ describe('Form', () => {
     /* 1. Create the mock onSave function */
     const onSave = jest.fn();
     /* 2. Render the Form with interviewers, name and the onSave mock function passed as an onSave prop */
-    const { getByText, getByPlaceholderText, queryByText } = render(
-      <Form interviewers={interviewers} onSave={onSave} />
-    );
+    const { getByText, getByPlaceholderText, queryByText, getByAltText } =
+      render(<Form interviewers={interviewers} onSave={onSave} />);
 
     /* 3. Click the save button */
     fireEvent.click(getByText('Save'));
@@ -70,12 +69,20 @@ describe('Form', () => {
     /* 7. Click the save button */
     fireEvent.click(getByText('Save'));
 
-    /* 8. validation is not shown */
+    /* 8. student name validation is not shown */
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
-    /* 9. onSave is called once */
+    /* 9. interviewer validation is shown */
+    expect(getByText(/an interviewer must be selected/i)).toBeInTheDocument();
+
+    /* 10. Click the first interviewer */
+    fireEvent.click(getByAltText('Sylvia Palmer'));
+    /* 11. Click the save button */
+    fireEvent.click(getByText('Save'));
+
+    /* 12. onSave is called once */
     expect(onSave).toHaveBeenCalledTimes(1);
-    /* 10. onSave is called with the correct arguments */
-    expect(onSave).toHaveBeenCalledWith('Lydia Miller-Jones', null);
+    /* 13. onSave is called with the correct arguments */
+    expect(onSave).toHaveBeenCalledWith('Lydia Miller-Jones', 1);
   });
 
   it('calls onCancel and resets the input field', () => {
