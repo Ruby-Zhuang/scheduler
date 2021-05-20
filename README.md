@@ -16,7 +16,7 @@ Canceling an Interview
 !["GIF of Canceling an Interview"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Deleting-interview.gif?raw=true)
 
 Interview Validation & Error Handling when Server Requests Fail
-!["GIF of Errors"](ttps://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Errors.gif?raw=true)
+!["GIF of Errors"](https://github.com/Ruby-Zhuang/scheduler/blob/master/docs/Errors.gif?raw=true)
 
 ## Features
 
