@@ -2,17 +2,21 @@
 
 Interview Scheduler is a modern single page React client application that allows a user to book, manage and cancel interviews with a mentor.
 
-Check out the 👉 [deployed website here](https://scheduler-rubyzhuang.netlify.app/) 👈!
+Check out the 👉 [deployed website!](https://scheduler-rubyzhuang.netlify.app/) 👈
 
 ## Final Product
 
-![Creating an Interview]()
+Creating an Interview
+!["GIF Creating an Interview"]()
 
-![Editing an Interview]()
+Editing an Interview
+!["GIF of Editing an Interview"]()
 
-![Canceling an Interview]()
+Canceling an Interview
+!["GIF of Canceling an Interview"]()
 
-![Error Messages for Saving and Deleting]()
+Error Messages for Saving and Deleting
+!["GIF of Error Messages for Saving and Deleting"]()
 
 ## Features
 
