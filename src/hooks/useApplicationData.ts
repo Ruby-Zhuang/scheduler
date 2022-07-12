@@ -1,5 +1,78 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
 import axios from 'axios';
+
+/**
+ * Update days array of objects with the number of spots remaining for a given day
+ * @param {[{}]} days An array of day objects.
+ * @param {{{}}} updatedAppointments An object of appointment objects.
+ * @param {Number} updatedAppointmentId The updated appointment id.
+ * @return {[{}]} An updated array of day objects.
+ */
+function updateDays(days, updatedAppointments, updatedAppointmentId) {
+  // Function that finds the number of spots remaining for a given day
+  const getSpotsRemaining = (day) => {
+    const appointmentIds = day.appointments;
+    const spotsRemaining = appointmentIds.filter(
+      (appointmentId) => updatedAppointments[appointmentId].interview === null
+    ).length;
+
+    return spotsRemaining;
+  };
+
+  // Iterate over days array and create a copy of each day & update the spots remaining for the day updated
+  const newDays = days.map((day) => {
+    // Updates the spots remaining for the day that has the updated interview
+    const appointmentIds = day.appointments;
+    return appointmentIds.includes(updatedAppointmentId)
+      ? { ...day, spots: getSpotsRemaining(day) }
+      : day;
+  });
+
+  return newDays;
+}
+
+const SET_DAY = 'SET_DAY';
+
+function reducer(state: ApplicationData, action: any): ApplicationData {
+  if (action.type === SET_DAY) {
+    return {
+      ...state,
+      day: action.day,
+    };
+  }
+
+  if (action.type === 'SET_DATA') {
+    return {
+      ...state,
+      days: action.days,
+      appointments: action.appointments,
+      interviewers: action.interviewers,
+    };
+  }
+
+  if (action.type === 'SET_INTERVIEW') {
+    // Immutable update pattern to update interview -> appointment -> appointments
+    const appointment = {
+      ...state.appointments[action.id],
+      interview: action.interview && { ...action.interview },
+    };
+    const appointments = { ...state.appointments, [action.id]: appointment };
+
+    // Update days with the new day and updated spots remaining
+    const days = updateDays(state.days, appointments, action.id);
+
+    return { ...state, days, appointments };
+  }
+
+  return state;
+}
+
+export interface ApplicationData {
+  day: WeekDay;
+  days: Day[];
+  appointments: Record<number, Appointment>;
+  interviewers: Record<number, Interviewer>;
+}
 
 /*
  * Custom Hook to provide the state and actions used to change the state.
@@ -8,7 +81,7 @@ import axios from 'axios';
  */
 const useApplicationData = function () {
   // Combined state object
-  const [state, setState] = useState({
+  const [state, dispatch] = useReducer(reducer, {
     day: 'Monday', // Currently selected day
     days: [], // [{}, {}, {}...] Days state to store an array of days (used for the sidebar)
     appointments: {}, // {{}, {}, {}...}
@@ -16,37 +89,7 @@ const useApplicationData = function () {
   });
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
-  const setDay = (day) => setState({ ...state, day });
-
-  /**
-   * Update days array of objects with the number of spots remaining for a given day
-   * @param {[{}]} days An array of day objects.
-   * @param {{{}}} updatedAppointments An object of appointment objects.
-   * @param {Number} updatedAppointmentId The updated appointment id.
-   * @return {[{}]} An updated array of day objects.
-   */
-  function updateDays(days, updatedAppointments, updatedAppointmentId) {
-    // Function that finds the number of spots remaining for a given day
-    const getSpotsRemaining = (day) => {
-      const appointmentIds = day.appointments;
-      const spotsRemaining = appointmentIds.filter(
-        (appointmentId) => updatedAppointments[appointmentId].interview === null
-      ).length;
-
-      return spotsRemaining;
-    };
-
-    // Iterate over days array and create a copy of each day & update the spots remaining for the day updated
-    const newDays = days.map((day) => {
-      // Updates the spots remaining for the day that has the updated interview
-      const appointmentIds = day.appointments;
-      return appointmentIds.includes(updatedAppointmentId)
-        ? { ...day, spots: getSpotsRemaining(day) }
-        : day;
-    });
-
-    return newDays;
-  }
+  const setDay = (day) => dispatch({ type: SET_DAY, day });
 
   /**
    * Adds an appointment/interview by making an HTTP request and updating the local state.
@@ -55,20 +98,10 @@ const useApplicationData = function () {
    * @return {Promise<>} A promise.
    */
   function bookInterview(id, interview) {
-    // Immutable update pattern to update interview -> appointment -> appointments
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview },
-    };
-    const appointments = { ...state.appointments, [id]: appointment };
-
-    // Update days with the new day and updated spots remaining
-    const days = updateDays(state.days, appointments, id);
-
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .put(`/api/appointments/${id}`, { interview })
-      .then(() => setState({ ...state, appointments, days }));
+      .then(() => dispatch({ type: 'SET_INTERVIEW', id, interview }));
   }
 
   /**
@@ -77,17 +110,10 @@ const useApplicationData = function () {
    * @return {Promise<>} A promise.
    */
   function cancelInterview(id) {
-    // Immutable update pattern to update interview -> appointment -> appointments
-    const appointment = { ...state.appointments[id], interview: null };
-    const appointments = { ...state.appointments, [id]: appointment };
-
-    // Update days with the new day and updated spots remaining
-    const days = updateDays(state.days, appointments, id);
-
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .delete(`/api/appointments/${id}`)
-      .then(() => setState({ ...state, appointments, days }));
+      .then(() => dispatch({ type: 'SET_INTERVIEW', id, interview: null }));
   }
 
   /*
@@ -112,7 +138,7 @@ const useApplicationData = function () {
         const appointments = appointmentsResponse.data;
         const interviewers = interviewersData.data;
 
-        setState((prev) => ({ ...prev, days, appointments, interviewers })); // Update state after all requests are complete
+        dispatch({ type: 'SET_DATA', days, appointments, interviewers }); // Update state after all requests are complete
       })
       .catch((error) => {
         console.log('Error: ', error);
