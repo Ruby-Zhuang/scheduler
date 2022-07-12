@@ -1,7 +1,10 @@
-import React from 'react';
+interface ErrorProps {
+  message: string;
+  onClose: () => void;
+}
 
 // Error component informs the user when an error occurs
-export default function Error(props) {
+export default function Error(props: ErrorProps) {
   return (
     <main className="appointment__card appointment__card--error">
       <section className="appointment__error-message">

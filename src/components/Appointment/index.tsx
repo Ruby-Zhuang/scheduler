@@ -1,4 +1,3 @@
-import React from 'react';
 import useVisualMode from 'hooks/useVisualMode';
 
 import './styles.scss';

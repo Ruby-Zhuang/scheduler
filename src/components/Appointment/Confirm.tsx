@@ -1,8 +1,13 @@
-import React from 'react';
 import Button from 'components/Button';
 
+interface ConfirmProps {
+  message: string;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
 // Confirm component allows a user to confirm a destructive action
-export default function Confirm(props) {
+export default function Confirm(props: ConfirmProps) {
   const { message, onCancel, onConfirm } = props;
 
   return (

@@ -1,5 +1,3 @@
-import React from 'react';
-
 // Header component displays the time for the appointment
 export default function Header(props) {
   return (

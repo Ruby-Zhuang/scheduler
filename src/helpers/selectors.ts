@@ -1,10 +1,12 @@
+import type { ApplicationData } from 'hooks/useApplicationData';
+
 /**
  * Get all appointments for a given day.
  * @param {day, days:[{}], appointments:{{}}, interviewers:{{}}} state An object containing state values.
  * @param {String} day The selected day.
  * @return {[{}]}  An array of appointment objects. Empty array if nothing found.
  */
-export function getAppointmentsForDay(state, day) {
+export function getAppointmentsForDay(state: ApplicationData, day: WeekDay) {
   const { days, appointments } = state;
 
   // Find the object in our state.days array who's name matches the provided day

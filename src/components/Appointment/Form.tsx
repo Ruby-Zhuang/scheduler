@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from 'components/Button';
 import InterviewerList from 'components/InterviewerList';
 
+interface FormProps {
+  name?: string;
+  interviewer?: number;
+  interviewers: Interviewer[];
+  onCancel: () => void;
+  onSave: (name: string, interviewer: number) => void;
+}
 /*
  * Form component keeps track of the current text input value and the currently selected interviewer
  * Allows user to input their information, save it and edit it
  */
-export default function Form(props) {
+export default function Form(props: FormProps) {
   // Add state and set default values
   const [name, setName] = useState(props.name || '');
   const [interviewer, setInterviewer] = useState(props.interviewer || null);

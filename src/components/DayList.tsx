@@ -1,4 +1,3 @@
-import React from 'react';
 import DayListItem from 'components/DayListItem';
 
 // Component that holds multiple days
