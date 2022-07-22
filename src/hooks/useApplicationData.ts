@@ -8,9 +8,13 @@ import axios from 'axios';
  * @param {Number} updatedAppointmentId The updated appointment id.
  * @return {[{}]} An updated array of day objects.
  */
-function updateDays(days, updatedAppointments, updatedAppointmentId) {
+function updateDays(
+  days: Day[],
+  updatedAppointments: Record<number, Appointment>,
+  updatedAppointmentId: number
+) {
   // Function that finds the number of spots remaining for a given day
-  const getSpotsRemaining = (day) => {
+  const getSpotsRemaining = (day: Day) => {
     const appointmentIds = day.appointments;
     const spotsRemaining = appointmentIds.filter(
       (appointmentId) => updatedAppointments[appointmentId].interview === null
@@ -97,7 +101,7 @@ const useApplicationData = function () {
    * @param {{student, interviewer}} interview An object containing the interview data.
    * @return {Promise<>} A promise.
    */
-  function bookInterview(id, interview) {
+  function bookInterview(id: number, interview: Interview) {
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .put(`/api/appointments/${id}`, { interview })
@@ -109,7 +113,7 @@ const useApplicationData = function () {
    * @param {Number} id The appointment id.
    * @return {Promise<>} A promise.
    */
-  function cancelInterview(id) {
+  function cancelInterview(id: number) {
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .delete(`/api/appointments/${id}`)
