@@ -36,6 +36,8 @@ function updateDays(
 }
 
 const SET_DAY = 'SET_DAY';
+const SET_DATA = 'SET_DATA';
+const SET_INTERVIEW = 'SET_INTERVIEW';
 
 function reducer(state: ApplicationData, action: any): ApplicationData {
   if (action.type === SET_DAY) {
@@ -45,7 +47,7 @@ function reducer(state: ApplicationData, action: any): ApplicationData {
     };
   }
 
-  if (action.type === 'SET_DATA') {
+  if (action.type === SET_DATA) {
     return {
       ...state,
       days: action.days,
@@ -54,7 +56,7 @@ function reducer(state: ApplicationData, action: any): ApplicationData {
     };
   }
 
-  if (action.type === 'SET_INTERVIEW') {
+  if (action.type === SET_INTERVIEW) {
     // Immutable update pattern to update interview -> appointment -> appointments
     const appointment = {
       ...state.appointments[action.id],
@@ -105,7 +107,7 @@ const useApplicationData = function () {
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .put(`/api/appointments/${id}`, { interview })
-      .then(() => dispatch({ type: 'SET_INTERVIEW', id, interview }));
+      .then(() => dispatch({ type: SET_INTERVIEW, id, interview }));
   }
 
   /**
@@ -117,7 +119,7 @@ const useApplicationData = function () {
     // Need to return promise so that Appointment component can transition to next MODE when it resolves
     return axios
       .delete(`/api/appointments/${id}`)
-      .then(() => dispatch({ type: 'SET_INTERVIEW', id, interview: null }));
+      .then(() => dispatch({ type: SET_INTERVIEW, id, interview: null }));
   }
 
   /*
@@ -142,7 +144,7 @@ const useApplicationData = function () {
         const appointments = appointmentsResponse.data;
         const interviewers = interviewersData.data;
 
-        dispatch({ type: 'SET_DATA', days, appointments, interviewers }); // Update state after all requests are complete
+        dispatch({ type: SET_DATA, days, appointments, interviewers }); // Update state after all requests are complete
       })
       .catch((error) => {
         console.log('Error: ', error);
