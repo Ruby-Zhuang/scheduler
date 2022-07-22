@@ -3,7 +3,7 @@ import DayListItem from 'components/DayListItem';
 interface DayListProps {
   days: Day[];
   day: WeekDay;
-  setDay: (day: WeekDay) => void; // QUESTION: seems like there's no arguments but still have to declare if it's from parents?
+  setDay: (day: WeekDay) => void; // QUESTION: seems like there's no arguments but still have to declare if it's from parents? When passing something down through props, do you have to type cast it for each component?
 }
 
 // Component that holds multiple days

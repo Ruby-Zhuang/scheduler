@@ -21,7 +21,7 @@ const ERROR_SAVE = 'ERROR_SAVE';
 const ERROR_DELETE = 'ERROR_DELETE';
 
 interface AppointmentProps {
-  key: number | string;
+  key: number | string; // QUESTION: when do you need to define key
   id?: number;
   time: string;
   interview?: { student: string; interviewer: Interviewer }; // QUESTION: how to merge types?
