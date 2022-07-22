@@ -1,7 +1,14 @@
 import classNames from 'classnames';
 import 'components/DayListItem.scss';
 
-export default function DayListItem(props) {
+interface DayListItemProps {
+  name: WeekDay;
+  spots: number;
+  selected: boolean;
+  setDay: (name: WeekDay) => void;
+}
+
+export default function DayListItem(props: DayListItemProps) {
   // Use classnames library to help compose the list of classes
   const dayClass = classNames('day-list__item', {
     'day-list__item--selected': props.selected,
