@@ -59,6 +59,7 @@ export default function Application() {
       <section className="schedule">
         {/* Schedule elements */}
         {appointmentList}
+        {/* QUESTION: how to handle a component used in a different way than intended with not many properties */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>

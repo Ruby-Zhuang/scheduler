@@ -30,7 +30,7 @@ export function getAppointmentsForDay(state: ApplicationData, day: WeekDay) {
  * @param {{student, interviewer}} interview The interview object with interviewer as an id.
  * @return {{student, interviewer:{}}}  An object containing the full interviewer data.
  */
-export function getInterview(state, interview) {
+export function getInterview(state: ApplicationData, interview: Interview) {
   const { interviewers } = state;
 
   if (!interview) return null; // Return null if no interview booked
