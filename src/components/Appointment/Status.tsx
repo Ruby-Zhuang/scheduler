@@ -1,5 +1,9 @@
+interface StatusProps {
+  message: string;
+}
+
 // Status component informs the user that an operation is in progress
-export default function Status(props) {
+export default function Status(props: StatusProps) {
   return (
     <main className="appointment__card appointment__card--status">
       <img
