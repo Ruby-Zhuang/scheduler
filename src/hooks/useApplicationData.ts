@@ -89,7 +89,7 @@ const useApplicationData = function () {
   });
 
   // Function that updates the state with all of the existing keys of state and the new day (replaces existing day)
-  const setDay = (day) => dispatch({ type: SET_DAY, day });
+  const setDay = (day: WeekDay) => dispatch({ type: SET_DAY, day });
 
   /**
    * Adds an appointment/interview by making an HTTP request and updating the local state.
