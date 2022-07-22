@@ -1,7 +1,13 @@
 import DayListItem from 'components/DayListItem';
 
+interface DayListProps {
+  days: Day[];
+  day: WeekDay;
+  setDay: (day: WeekDay) => void; // QUESTION: seems like there's no arguments but still have to declare if it's from parents?
+}
+
 // Component that holds multiple days
-export default function DayList(props) {
+export default function DayList(props: DayListProps) {
   // Map over the days array of objects to return <DayListItem /> components
   const daysData = props.days; // Array of day objects [{}]
   const daysList = daysData.map((day) => {
