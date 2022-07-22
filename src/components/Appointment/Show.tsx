@@ -1,5 +1,12 @@
+interface ShowProps {
+  student: string;
+  interviewer: Interviewer;
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
 // Show component allows a user to see an existing appointment
-export default function Show(props) {
+export default function Show(props: ShowProps) {
   const { student, interviewer, onEdit, onDelete } = props;
 
   return (
