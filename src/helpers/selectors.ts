@@ -48,7 +48,7 @@ export function getInterview(state: ApplicationData, interview: Interview) {
  * @param {String} day The selected day.
  * @return {[{}]}  An array of interviewer objects. Empty array if nothing found.
  */
-export function getInterviewersForDay(state, day) {
+export function getInterviewersForDay(state: ApplicationData, day: WeekDay) {
   const { days, interviewers } = state; // days [{}, {}, {}...] and appointments {{}, {}, {}...}
 
   // Find the object in our state.days array who's name matches the provided day
