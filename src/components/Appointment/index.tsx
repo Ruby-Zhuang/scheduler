@@ -1,4 +1,3 @@
-import React from 'react';
 import useVisualMode from 'hooks/useVisualMode';
 
 import './styles.scss';
@@ -21,14 +20,24 @@ const EDIT = 'EDIT';
 const ERROR_SAVE = 'ERROR_SAVE';
 const ERROR_DELETE = 'ERROR_DELETE';
 
-export default function Appointment(props) {
+interface AppointmentProps {
+  key: number | string; // QUESTION: when do you need to define key
+  id?: number;
+  time: string;
+  interview?: { student: string; interviewer: Interviewer }; // QUESTION: how to merge types?
+  interviewers?: Interviewer[];
+  bookInterview?: (id: number, interview: Interview) => Promise<void>; // QUESTION: how to typecase promise returns
+  cancelInterview?: (id: number) => Promise<void>;
+}
+
+export default function Appointment(props: AppointmentProps) {
   // use useVisualMode Hook and initialize mode to either SHOW or EMPTY if there's an interview
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   // Saving an interview -> show appointment once saved
-  function save(name, interviewer) {
+  function save(name: string, interviewer: number) {
     const interview = {
       student: name,
       interviewer, // id of interviewer
@@ -40,7 +49,7 @@ export default function Appointment(props) {
     props
       .bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch((error) => transition(ERROR_SAVE, true));
+      .catch(() => transition(ERROR_SAVE, true));
   }
 
   // Deleting an interview -> slot becomes empty
@@ -50,7 +59,7 @@ export default function Appointment(props) {
     props
       .cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch((error) => transition(ERROR_DELETE, true)); // Replace previous DELETING mode
+      .catch(() => transition(ERROR_DELETE, true)); // Replace previous DELETING mode
   }
 
   return (

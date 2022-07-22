@@ -1,11 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import InterviewerListItem from 'components/InterviewerListItem';
 
 import 'components/InterviewerList.scss';
 
-export default function InterviewerList(props) {
+interface InterviewerListProps {
+  value: number;
+  interviewers: Interviewer[];
+  onChange: (id: number) => void;
+}
+
+export default function InterviewerList(props: InterviewerListProps) {
   // Map over the interviewers array of objects to return <InterviewerListItem /> components
   const interviewersData = props.interviewers;
   const interviewersList = interviewersData.map((interviewer) => {
@@ -17,7 +20,7 @@ export default function InterviewerList(props) {
         name={name}
         avatar={avatar}
         selected={id === props.value}
-        setInterviewer={(event) => props.onChange(id)}
+        setInterviewer={() => props.onChange(id)}
       />
     );
   });
@@ -29,8 +32,3 @@ export default function InterviewerList(props) {
     </section>
   );
 }
-
-// Define the validation configuration for interviewers props: to be an Array
-InterviewerList.propTypes = {
-  interviewers: PropTypes.array.isRequired,
-};

@@ -1,10 +1,12 @@
+import type { ApplicationData } from 'hooks/useApplicationData';
+
 /**
  * Get all appointments for a given day.
  * @param {day, days:[{}], appointments:{{}}, interviewers:{{}}} state An object containing state values.
  * @param {String} day The selected day.
  * @return {[{}]}  An array of appointment objects. Empty array if nothing found.
  */
-export function getAppointmentsForDay(state, day) {
+export function getAppointmentsForDay(state: ApplicationData, day: WeekDay) {
   const { days, appointments } = state;
 
   // Find the object in our state.days array who's name matches the provided day
@@ -28,7 +30,7 @@ export function getAppointmentsForDay(state, day) {
  * @param {{student, interviewer}} interview The interview object with interviewer as an id.
  * @return {{student, interviewer:{}}}  An object containing the full interviewer data.
  */
-export function getInterview(state, interview) {
+export function getInterview(state: ApplicationData, interview: Interview) {
   const { interviewers } = state;
 
   if (!interview) return null; // Return null if no interview booked
@@ -46,7 +48,7 @@ export function getInterview(state, interview) {
  * @param {String} day The selected day.
  * @return {[{}]}  An array of interviewer objects. Empty array if nothing found.
  */
-export function getInterviewersForDay(state, day) {
+export function getInterviewersForDay(state: ApplicationData, day: WeekDay) {
   const { days, interviewers } = state; // days [{}, {}, {}...] and appointments {{}, {}, {}...}
 
   // Find the object in our state.days array who's name matches the provided day

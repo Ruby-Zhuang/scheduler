@@ -1,5 +1,3 @@
-import React from 'react';
-
 import DayList from 'components/DayList';
 import Appointment from 'components/Appointment';
 import {
@@ -12,7 +10,7 @@ import useApplicationData from 'hooks/useApplicationData';
 
 import 'components/Application.scss';
 
-export default function Application(props) {
+export default function Application() {
   const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
 
@@ -61,6 +59,7 @@ export default function Application(props) {
       <section className="schedule">
         {/* Schedule elements */}
         {appointmentList}
+        {/* QUESTION: how to handle a component used in a different way than intended with not many properties */}
         <Appointment key="last" time="5pm" />
       </section>
     </main>

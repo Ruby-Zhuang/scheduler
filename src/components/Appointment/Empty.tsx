@@ -1,7 +1,9 @@
-import React from 'react';
+interface EmptyProps {
+  onAdd: () => void;
+}
 
 // Empty component allows a user to choose which time slot to book
-export default function Empty(props) {
+export default function Empty(props: EmptyProps) {
   return (
     <main className="appointment__add">
       <img

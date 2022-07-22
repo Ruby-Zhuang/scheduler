@@ -1,8 +1,13 @@
-import React from 'react';
 import classNames from 'classnames';
 import 'components/InterviewerListItem.scss';
 
-export default function InterviewerListItem(props) {
+interface InterviewerListItemProps {
+  name: string;
+  avatar: string;
+  selected: boolean;
+  setInterviewer: () => void;
+}
+export default function InterviewerListItem(props: InterviewerListItemProps) {
   // Use classnames library to help compose the list of classes
   const interviewerClass = classNames('interviewers__item', {
     'interviewers__item--selected': props.selected,
